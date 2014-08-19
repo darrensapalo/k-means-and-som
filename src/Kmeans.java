@@ -1,8 +1,6 @@
 import java.util.HashMap;
 
-import kohonen.WTMLearningFunction;
 import network.DefaultNetwork;
-import topology.MatrixTopology;
 
 public class Kmeans {
 	private HashMap<Integer, String> colorMap;
