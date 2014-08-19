@@ -1,7 +1,7 @@
 # K-means and SOM visualization
 
 ## Introduction
-This Java project allows you to visualize a dataset using SOM and k-means.
+This Java project allows you to visualize a dataset using SOM and k-means clustering, output into an .html file. The visualization is presented as an HTML table with numbers (SOM) superimposed with colors (k-means clustering).
 
 ## Where's the data?
 You can find the data (csv files) inside the `warehouse/` folder. You can create a folder there for your other __database or csv__. The name of the folder will represent the name of your database.
