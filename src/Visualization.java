@@ -125,7 +125,7 @@ public class Visualization {
 		body.append("</table>");
 
 		// Write the file
-		File file = new File(datasetTitle + "/" + datasetTitle + "-visualization.html");
+		File file = new File("warehouse/" + datasetTitle + "/" + datasetTitle + "-visualization.html");
 		BufferedWriter bw;
 		try {
 			bw = new BufferedWriter(new FileWriter(file));

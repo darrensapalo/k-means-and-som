@@ -33,8 +33,8 @@ public class Driver {
 		}
 		
 
-		fileData = new LearningData(datasetTitle + "/" + datasetTitle + "DataSet.csv");
-		labelledData = new LearningData(datasetTitle + "/" + datasetTitle + "LabelledDataSet.csv");
+		fileData = new LearningData("warehouse/" + datasetTitle + "/" + datasetTitle + "DataSet.csv");
+		labelledData = new LearningData("warehouse/" + datasetTitle + "/" + datasetTitle + "LabelledDataSet.csv");
 		
 		new Visualization(datasetTitle, width, height, fileData, labelledData, inputs, maxIterations);
 
