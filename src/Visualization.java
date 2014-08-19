@@ -63,7 +63,8 @@ public class Visualization {
 		// Start learning process
 		learning.learn();
 
-		// kmeansalgo = new Kmeans(topology, learning, network, 2);
+		int k = 2;
+		kmeansalgo = new Kmeans(network, k);
 
 		// Create EuclidesMetric
 		EuclidesMetric metric = new EuclidesMetric();
