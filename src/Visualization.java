@@ -98,21 +98,21 @@ public class Visualization {
 		produceHTMLvisualization(kmeansalgo, label, datasetTitle);
   	}
 
-	private static void produceHTMLvisualization(Kmeans kmeansalgo,
+	private void produceHTMLvisualization(Kmeans kmeansalgo,
 			int[] label, String datasetTitle) {
 
 		StringBuilder head = new StringBuilder();
 		head.append("<head>\n")
-				.append("<title>" + datasetTitle + "</title>\n")
+				.append("<title>" + datasetTitle + " Data set</title>\n")
 				.append("<style>table, th, td {border: 1px solid black;}</style>\n")
 				.append("</head>\n");
 
 		StringBuilder body = new StringBuilder();
 		int ctr = 0;
 		body.append("<table>\n");
-		for (int y = 0; y < 10; y++) {
+		for (int y = 0; y < height; y++) {
 			body.append("<tr>");
-			for (int x = 0; x < 10; x++) {
+			for (int x = 0; x < width; x++) {
 				String color = kmeansalgo.getColorFromNodeAt(ctr);
 				body.append(color);
 				body.append("<td style='color: " + color + "'>");
@@ -125,15 +125,14 @@ public class Visualization {
 		body.append("</table>");
 
 		// Write the file
-		File file = new File(datasetTitle + ".html");
+		File file = new File(datasetTitle + "/" + datasetTitle + "-visualization.html");
 		BufferedWriter bw;
 		try {
 			bw = new BufferedWriter(new FileWriter(file));
 			bw.write("<html>" + head + body + "</html>");
 			bw.close();
 		} catch (IOException e) {
-			System.out.println("Cannot write file " + file.getName() + ": "
-					+ e.getMessage());
+			System.out.println("Cannot write file " + file.getName() + ": " + e.getMessage());
 		}
 	}
 

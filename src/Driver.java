@@ -27,7 +27,7 @@ public class Driver {
 			datasetTitle = "GenAndTech";
 			width = 10;
 			height = 10;
-			inputs = 54;
+			inputs = 567;
 			maxIterations = 100;
 			break;
 		}
