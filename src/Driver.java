@@ -12,9 +12,9 @@ public class Driver {
 		LearningData fileData = null;
 		LearningData labelledData = null;
 
-		
+		DataSet useDataset = DataSet.TREE;
 
-		switch(DataSet.TREE){
+		switch(useDataset){
 		case TREE:
 			datasetTitle = "Tree";
 			width = 10;
