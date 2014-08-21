@@ -57,12 +57,15 @@ public class Visualization {
 
 		// Creates a Matrix Topology with width columns and height rows
 		MatrixTopology topology = new MatrixTopology(width, height);
-
+		
+		// Set radius
+		topology.setRadius(3);
+		
 		// Defines max value of neuron weights
 		double[] maxWeight = new double[inputs];
 		
 		for (int i = 0; i < maxWeight.length; i++){
-			maxWeight[i] = 1;
+			maxWeight[i] = 10;
 		}
 
 		// Creates a network with a # of inputs, max weight of neurons and a
@@ -73,9 +76,8 @@ public class Visualization {
 		LinearFunctionalFactor linearFunctionalFactor = new LinearFunctionalFactor(
 				0.8, maxIterations);
 
-		// Set the Gauss Neighborhood Function
-		GaussNeighbourhoodFunction gaussFunction = new GaussNeighbourhoodFunction(
-				1);
+		// Set the Gauss Neighborhood Function radius to 3
+		GaussNeighbourhoodFunction gaussFunction = new GaussNeighbourhoodFunction(3);
 
 		// Set learning Function - Winner Take Most Function
 		WTMLearningFunction learning = new WTMLearningFunction(network,
@@ -139,10 +141,10 @@ public class Visualization {
         });
         
         
-        produceHTMLvisualization(visualization, datasetTitle);
+        produceHTMLvisualization(clusters, labels, datasetTitle);
   	}
 
-	private void produceHTMLvisualization(ArrayList<ClusterAndLabel> visualization, String datasetTitle) {
+	private void produceHTMLvisualization(int[] clusters, int[] labels, String datasetTitle) {
 
 		StringBuilder head = new StringBuilder();
 		head.append("<head>\n")
@@ -161,10 +163,10 @@ public class Visualization {
 		for (int y = 0; y < height; y++) {
 			body.append("<tr>");
 			for (int x = 0; x < width; x++) {
-				String color = ColorPicker.get( visualization.get(ctr).cluster );
+				String color = ColorPicker.get( clusters[ctr] );
 				body.append(color);
 				body.append("<td style='background-color: " + color + "'>");
-				body.append(visualization.get(ctr).label);
+				body.append(labels[ctr]);
 				body.append("</td>");
 				ctr++;
 			}

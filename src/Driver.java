@@ -21,7 +21,7 @@ public class Driver {
 			height = 10;
 			inputs = 54;
 			k = 7;
-			maxIterations = 100;
+			maxIterations = 20;
 			
 		break;
 		case GENERAL_AND_TECH:
@@ -30,7 +30,7 @@ public class Driver {
 			height = 10;
 			inputs = 567;
 			k = 4;
-			maxIterations = 100;
+			maxIterations = 20;
 			break;
 		}
 		

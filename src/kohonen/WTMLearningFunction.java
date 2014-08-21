@@ -291,7 +291,7 @@ public class WTMLearningFunction {
             weight = weightList[i];
             weightList[i] += functionalModel.getValue(iteration) * neighboorhoodFunction.getValue(distance) * (vector[i] - weight);
         }
-        networkModel.getNeuron(neuronNumber).setWeight(weightList);
+        networkModel.getNeuron(neuronNumber-1).setWeight(weightList);
         
         if(showComments){
             String weightText="[";
