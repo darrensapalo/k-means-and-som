@@ -27,7 +27,6 @@ public class Kmeans {
         try {
             kmeans.setNumClusters(k);
             kmeans.buildClusterer(instances);
-            
             return kmeans.getAssignments();
         }
         catch (Exception e) {

@@ -2,7 +2,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -16,7 +20,6 @@ import metrics.EuclidesMetric;
 import network.DefaultNetwork;
 import topology.GaussNeighbourhoodFunction;
 import topology.MatrixTopology;
-
 import weka.core.Instances;
 
 public class Visualization {
@@ -28,9 +31,20 @@ public class Visualization {
 	private LearningData fileData;
 	private LearningData labelledData;
 	private int inputs;
-
+	
+	
+	private class ClusterAndLabel
+	{
+		public int cluster;
+		public int label;
+		
+		public ClusterAndLabel(int cluster, int label) {
+			this.cluster = cluster;
+			this.label = label;
+		}
+	}
 	public Visualization(String datasetTitle, int width, int height,
-			LearningData fileData, LearningData labelledData, int inputs, int maxIterations) {
+			LearningData fileData, LearningData labelledData, int inputs, int maxIterations, int k) {
 
 		this.datasetTitle = datasetTitle;
 		this.width = width;
@@ -78,8 +92,6 @@ public class Visualization {
 		// Store all labels of instances
 		int[] labels = storeInstanceLabels(fileData, labelledData);
 		
-		System.out.println(labels);
-
 		int[] label = new int[width * height];
 		double[] lowestValues = new double[g];
 
@@ -101,32 +113,58 @@ public class Visualization {
 		}
 		
 		Instances instances = new NeuronsToInstance().convert(network, "Dataset", inputs);
-        int k = 7;
         Kmeans kmeans = new Kmeans(instances, k);
         int[] clusters = kmeans.getAssignments();
-
-		
-		produceHTMLvisualization(clusters, label, datasetTitle);
+        
+        ArrayList<ClusterAndLabel> visualization = new ArrayList<Visualization.ClusterAndLabel>();
+        for (int i = 0; i < clusters.length; i++){
+        	ClusterAndLabel clusterAndLabelInstance = new ClusterAndLabel(clusters[i], labels[i]);
+        	visualization.add(clusterAndLabelInstance);
+        }
+        
+        
+        Collections.sort(visualization, new Comparator<ClusterAndLabel>() {
+            @Override
+            public int compare(ClusterAndLabel a, ClusterAndLabel b)
+            {
+            	if (a.cluster < b.cluster) return -1;
+            	if (a.cluster == b.cluster) {
+            		if (a.label < b.label) return -1;
+            		if (a.label == b.label) return 0;
+            		if (a.label > b.label) return 1;
+            	}
+            	if (a.cluster > b.cluster) return 1;
+                return 0;
+            }
+        });
+        
+        
+        produceHTMLvisualization(visualization, datasetTitle);
   	}
 
-	private void produceHTMLvisualization(int[] clusters, int[] label, String datasetTitle) {
+	private void produceHTMLvisualization(ArrayList<ClusterAndLabel> visualization, String datasetTitle) {
 
 		StringBuilder head = new StringBuilder();
 		head.append("<head>\n")
 			.append("<title>" + datasetTitle + " Data set</title>\n")
-			.append("<style>table, th, td {border: 1px solid black;}</style>\n")
+			.append("<style>table, th, td {border: 0px solid black; font-size: 25px; font-weight: bold;} td{padding: 10; text-align: center}</style>\n")
 			.append("</head>\n");
 
+		
+		// map clusters by labels
+		// sortBy(clusters)
+		// display by clusters
+		
 		StringBuilder body = new StringBuilder();
 		int ctr = 0;
 		body.append("<table>\n");
 		for (int y = 0; y < height; y++) {
 			body.append("<tr>");
 			for (int x = 0; x < width; x++) {
-				String color = ColorPicker.get( clusters[ctr] );
+				String color = ColorPicker.get( visualization.get(ctr).cluster );
 				body.append(color);
-				body.append("<td style='color: " + color + "'>");
-				body.append(label[ctr]);
+				body.append("<td style='background-color: " + color + "'>");
+				body.append(visualization.get(ctr).label);
 				body.append("</td>");
 				ctr++;
 			}
