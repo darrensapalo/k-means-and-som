@@ -46,6 +46,10 @@ public class Visualization {
 
 		// Defines max value of neuron weights
 		double[] maxWeight = new double[inputs];
+		
+		for (int i = 0; i < maxWeight.length; i++){
+			maxWeight[i] = 1;
+		}
 
 		// Creates a network with a # of inputs, max weight of neurons and a
 		// topology
@@ -73,6 +77,8 @@ public class Visualization {
 
 		// Store all labels of instances
 		int[] labels = storeInstanceLabels(fileData, labelledData);
+		
+		System.out.println(labels);
 
 		int[] label = new int[width * height];
 		double[] lowestValues = new double[g];
