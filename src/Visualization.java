@@ -141,10 +141,10 @@ public class Visualization {
         });
         
         
-        produceHTMLvisualization(clusters, labels, datasetTitle);
+        produceHTMLvisualization(clusters, labels, datasetTitle, width, height, maxIterations);
   	}
 
-	private void produceHTMLvisualization(int[] clusters, int[] labels, String datasetTitle) {
+	private void produceHTMLvisualization(int[] clusters, int[] labels, String datasetTitle, int width, int height, int maxIterations) {
 
 		StringBuilder head = new StringBuilder();
 		head.append("<head>\n")
@@ -175,7 +175,7 @@ public class Visualization {
 		body.append("</table>");
 
 		// Write the file
-		File file = new File("warehouse/" + datasetTitle + "/" + datasetTitle + "-visualization.html");
+		File file = new File("warehouse/" + datasetTitle + "/" + datasetTitle + "-" + width + "x" + height + "-" + maxIterations+"iter-visualization.html");
 		BufferedWriter bw;
 		try {
 			bw = new BufferedWriter(new FileWriter(file));

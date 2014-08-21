@@ -6,7 +6,7 @@ public class ColorPicker {
         String color = "";
         switch (id) {
         
-            case 0: color = "black"; break;
+            case 0: color = "white"; break;
             case 1: color = "red"; break;
             case 2: color = "yellow"; break;
             case 3: color = "green"; break;
