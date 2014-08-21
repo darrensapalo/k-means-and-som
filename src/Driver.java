@@ -67,7 +67,7 @@ public class Driver {
 				new Visualization(datasetTitle, width, height, fileData, labelledData, inputs, maxIterations, k);
 				System.out.println("Done");
 			}
-			useDataset = DataSet.GENERAL_AND_TECH;
+			useDataset = DataSet.TREE;
 		}
 		
 		
