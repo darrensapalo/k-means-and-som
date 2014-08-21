@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import kmeans.ColorPicker;
+import kmeans.NeuronsToInstance;
 import kohonen.LearningData;
 import kohonen.WTMLearningFunction;
 import learningFactorFunctional.LinearFunctionalFactor;
@@ -14,6 +16,8 @@ import metrics.EuclidesMetric;
 import network.DefaultNetwork;
 import topology.GaussNeighbourhoodFunction;
 import topology.MatrixTopology;
+
+import weka.core.Instances;
 
 public class Visualization {
 
@@ -62,10 +66,8 @@ public class Visualization {
 
 		// Start learning process
 		learning.learn();
-
-		int k = 2;
-		kmeansalgo = new Kmeans(network, k);
-
+		
+		
 		// Create EuclidesMetric
 		EuclidesMetric metric = new EuclidesMetric();
 
@@ -76,8 +78,7 @@ public class Visualization {
 		double[] lowestValues = new double[g];
 
 		// Loop for each neuron
-		for (int currentNeuronIdx = 0; currentNeuronIdx < network
-				.getNumbersOfNeurons(); currentNeuronIdx++) {
+		for (int currentNeuronIdx = 0; currentNeuronIdx < network.getNumbersOfNeurons(); currentNeuronIdx++) {
 
 			// Initialize containers
 			double[] distances = new double[fileData.getDataSize()];
@@ -86,26 +87,29 @@ public class Visualization {
 					.getNeuron(currentNeuronIdx).getWeight();
 			Arrays.fill(lowestValues, Integer.MAX_VALUE);
 
-			distances = getEuclideanDistances(distances, fileData, metric,
-					weightOfCurrentNeuron);
-			lowestValues = getLowestValues(lowestValues, fileData, distances,
-					indexes, g);
+			distances = getEuclideanDistances(distances, fileData, metric, weightOfCurrentNeuron);
+			lowestValues = getLowestValues(lowestValues, fileData, distances, indexes, g);
 			int[] cl = getLabels(indexes, g, labels);
 			HashMap<Integer, Integer> frequencyCount = getFrequencyCount(cl);
 			label[currentNeuronIdx] = getMostFrequent(frequencyCount);
 		}
+		
+		Instances instances = new NeuronsToInstance().convert(network, "Dataset", inputs);
+        int k = 7;
+        Kmeans kmeans = new Kmeans(instances, k);
+        int[] clusters = kmeans.getAssignments();
 
-		produceHTMLvisualization(kmeansalgo, label, datasetTitle);
+		
+		produceHTMLvisualization(clusters, label, datasetTitle);
   	}
 
-	private void produceHTMLvisualization(Kmeans kmeansalgo,
-			int[] label, String datasetTitle) {
+	private void produceHTMLvisualization(int[] clusters, int[] label, String datasetTitle) {
 
 		StringBuilder head = new StringBuilder();
 		head.append("<head>\n")
-				.append("<title>" + datasetTitle + " Data set</title>\n")
-				.append("<style>table, th, td {border: 1px solid black;}</style>\n")
-				.append("</head>\n");
+			.append("<title>" + datasetTitle + " Data set</title>\n")
+			.append("<style>table, th, td {border: 1px solid black;}</style>\n")
+			.append("</head>\n");
 
 		StringBuilder body = new StringBuilder();
 		int ctr = 0;
@@ -113,7 +117,7 @@ public class Visualization {
 		for (int y = 0; y < height; y++) {
 			body.append("<tr>");
 			for (int x = 0; x < width; x++) {
-				String color = kmeansalgo.getColorFromNodeAt(ctr);
+				String color = ColorPicker.get( clusters[ctr] );
 				body.append(color);
 				body.append("<td style='color: " + color + "'>");
 				body.append(label[ctr]);

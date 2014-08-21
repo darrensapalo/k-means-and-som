@@ -37,7 +37,7 @@ public class Driver {
 		labelledData = new LearningData("warehouse/" + datasetTitle + "/" + datasetTitle + "LabelledDataSet.csv");
 		
 		new Visualization(datasetTitle, width, height, fileData, labelledData, inputs, maxIterations);
-
+		System.out.println("Done");
 	}
 	
 	
