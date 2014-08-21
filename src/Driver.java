@@ -7,7 +7,7 @@ public class Driver {
 	}
 	public static void main(String[] args) {
 		String datasetTitle = "";
-		int width = 1, height = 1, inputs = 1, maxIterations = 10;
+		int width = 1, height = 1, inputs = 1, maxIterations = 10, k = 4;
 		
 		LearningData fileData = null;
 		LearningData labelledData = null;
@@ -20,6 +20,7 @@ public class Driver {
 			width = 10;
 			height = 10;
 			inputs = 54;
+			k = 7;
 			maxIterations = 100;
 			
 		break;
@@ -28,6 +29,7 @@ public class Driver {
 			width = 10;
 			height = 10;
 			inputs = 567;
+			k = 4;
 			maxIterations = 100;
 			break;
 		}
@@ -36,7 +38,7 @@ public class Driver {
 		fileData = new LearningData("warehouse/" + datasetTitle + "/" + datasetTitle + "DataSet.csv");
 		labelledData = new LearningData("warehouse/" + datasetTitle + "/" + datasetTitle + "LabelledDataSet.csv");
 		
-		new Visualization(datasetTitle, width, height, fileData, labelledData, inputs, maxIterations);
+		new Visualization(datasetTitle, width, height, fileData, labelledData, inputs, maxIterations, k);
 		System.out.println("Done");
 	}
 	

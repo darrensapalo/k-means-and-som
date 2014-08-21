@@ -9,3 +9,7 @@
 /network/
 /topology/
 /kmeans/
+/Visualization$clusterToLabel.class
+/Visualization$clusterAndLabel.class
+/Visualization$ClusterAndLabel.class
+/Visualization$1.class
